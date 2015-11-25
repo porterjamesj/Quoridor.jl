@@ -54,6 +54,14 @@ immutable Wall
     end
 end
 
+function blocks(wall::Wall, move::PlayerMove)
+    # TODO implement
+end
+
+
+function blocks(wall::Wall, move::WallPlacement)
+    # TODO implement
+end
 
 "Encapsulates the state of a given player"
 type PlayerState
@@ -100,10 +108,10 @@ type Game
     active::Player
 end
 
-Game() = Game(Wall[],
-              PlayerState(Loc(1, 5)),
-              PlayerState(Loc(9, 5)),
-              rand(Player))
+initstate(::Type{Val{Player1}}) = PlayerState(Loc(1,5))
+initstate(::Type{Val{Player}}) = PlayerState(Loc(9,5))
+
+Game() = Game(Wall[], initstate(Player1), initstate(Player2), rand(Player))
 
 "return a copy of `game`, nothing shared with the original"
 copy(game::Game) = Game(copy(walls), p1, p2, turn)
@@ -181,5 +189,6 @@ function playermoves(game::Game)
     # is at any of the potential move locs, fixing up the resulting
     # moves so that the original location is correct (as the move is a
     # jump)
+end
 
 end # module

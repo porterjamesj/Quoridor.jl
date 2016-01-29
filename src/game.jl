@@ -76,31 +76,7 @@ function legalmoves(game::Game)
     return ret
 end
 
-function playermoves(game::Game)
-    us = game[active(game)]
-    them = game[inactive(game)]
-    ret = PlayerMove[]
-    for move in potential_moves(us)
-        if isoutofbounds(move)
-            # TODO maybe do this in potential_moves
-            continue
-        end
-        if loc(them) == move.to
-            # we can jump over them, this next loop ads jumps
-            for move in potential_moves(them)
-                if move.to != loc(us) && !any_blocks(walls(game), move)
-                    push!(ret, move)
-                end
-            end
-        else
-            # these are non-jump moves
-            if !any_blocks(walls(game), move)
-                push!(ret, move)
-            end
-        end
-    end
-    return ret
-end
+playermoves(game::Game) = out_edges(loc(game[active(game)]), game)
 
 function wallplacements(game::Game)
     # note that some of these placements will be illegal because they

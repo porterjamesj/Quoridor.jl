@@ -56,13 +56,16 @@ center(w::Wall) = w.center
 bottom(w::Wall) = w.bottom
 top(w::Wall) = w.top
 adjacent(w::Wall) = w.adjacent
+direction(w::Wall) = w.direction
 
 show(io::IO, w::Wall) = write(io, "($(w.bottom)---$(w.top)")
 
 
 function separates(wall::Wall, l1::Loc, l2::Loc)
     adjacent_locs = adjacent(wall)
-    l1 in adjacent_locs && l2 in adjacent_locs
+    both_adjacent = l1 in adjacent_locs && l2 in adjacent_locs
+    return both_adjacent && (direction(wall) == Vertical && l1.y == l2.y ||
+                             direction(wall) == Horizontal && l1.x == l2.x)
 end
 
 function any_separates(walls::Vector{Wall}, l1::Loc, l2::Loc)

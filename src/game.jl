@@ -10,8 +10,8 @@ type Game <: AbstractGraph{Loc, Edge{Loc}}
     active::Player
 end
 
-initstate(::Type{Val{Player1}}) = PlayerState(Loc(1,5))
-initstate(::Type{Val{Player2}}) = PlayerState(Loc(9,5))
+initstate(::Type{Val{Player1}}) = PlayerState(Loc(5,1))
+initstate(::Type{Val{Player2}}) = PlayerState(Loc(5,9))
 
 Game() = Game(Wall[],
               initstate(Val{Player1}),
@@ -61,7 +61,6 @@ takeback(game::Game, move::Move) = takeback!(copy(Game), move)
 function neighbors(game::Game, l1::Loc, l2::Loc)
     !any_separates(walls(game), l1, l2)
 end
-
 
 # generate the set of all legal moves for a given game
 function legalmoves(game::Game)

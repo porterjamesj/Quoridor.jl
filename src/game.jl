@@ -31,6 +31,8 @@ getindex(game::Game, player::Player) = ifelse(player == Player1,
                                               game.p1, game.p2)
 
 
+occupied(g::Game, l::Loc) = loc(g[Player1]) == l || loc(g[Player2]) == l
+
 # applying and un-applying moves to games
 
 function apply!(game::Game, pm::PlayerMove)
